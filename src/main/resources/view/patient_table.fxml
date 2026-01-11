@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.amalitech.hospitalmanagementsystem.controller.PatientTableController">
+    <top>
+        <ToolBar>
+            <TextField fx:id="searchField" promptText="Search by name..."/>
+            <Button text="Search" onAction="#onSearch"/>
+            <Separator orientation="VERTICAL"/>
+            <Button text="Add" onAction="#onAdd"/>
+            <Button text="Edit" onAction="#onEdit"/>
+            <Button text="Delete" onAction="#onDelete"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Refresh" onAction="#onRefresh"/>
+        </ToolBar>
+    </top>
+
+    <center>
+        <TableView fx:id="patientTable">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="70"/>
+                <TableColumn fx:id="colFirstName" text="First Name" prefWidth="120"/>
+                <TableColumn fx:id="colLastName" text="Last Name" prefWidth="120"/>
+                <TableColumn fx:id="colGender" text="Gender" prefWidth="90"/>
+                <TableColumn fx:id="colDob" text="Date of Birth" prefWidth="120"/>
+                <TableColumn fx:id="colPhone" text="Phone" prefWidth="130"/>
+                <TableColumn fx:id="colEmail" text="Email" prefWidth="180"/>
+                <TableColumn fx:id="colAddress" text="Address" prefWidth="200"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <padding>
+        <Insets topRightBottomLeft="10"/>
+    </padding>
+</BorderPane>

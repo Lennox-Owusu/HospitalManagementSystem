@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.amalitech.hospitalmanagementsystem.controller.AppointmentTableController">
+
+
+    <top>
+        <ToolBar>
+            <TextField fx:id="searchField" promptText="Search by patient/doctor name or status..."/>
+            <Button text="Search"   onAction="#onSearch"/>
+            <Separator orientation="VERTICAL"/>
+            <Button text="Add"      onAction="#onAdd"/>
+            <Button text="Edit"     onAction="#onEdit"/>
+            <Button text="Delete"   onAction="#onDelete"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Refresh"  onAction="#onRefresh"/>
+        </ToolBar>
+    </top>
+
+
+    <center>
+        <TableView fx:id="apptTable">
+            <columns>
+                <TableColumn fx:id="colId"       text="ID"           prefWidth="70"/>
+                <TableColumn fx:id="colPatient"  text="Patient"      prefWidth="150"/>
+                <TableColumn fx:id="colDoctor"   text="Doctor"       prefWidth="150"/>
+                <TableColumn fx:id="colDateTime" text="Date / Time"  prefWidth="160"/>
+                <TableColumn fx:id="colStatus"   text="Status"       prefWidth="120"/>
+                <TableColumn fx:id="colReason"   text="Reason"       prefWidth="250"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <padding><Insets topRightBottomLeft="10"/></padding>
+</BorderPane>

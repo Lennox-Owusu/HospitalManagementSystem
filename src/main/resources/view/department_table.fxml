@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.amalitech.hospitalmanagementsystem.controller.DepartmentTableController">
+
+    <top>
+        <ToolBar>
+            <TextField fx:id="searchField" promptText="Search by name..."/>
+            <Button text="Search" onAction="#onSearch"/>
+            <Separator orientation="VERTICAL"/>
+            <Button text="Add" onAction="#onAdd"/>
+            <Button text="Edit" onAction="#onEdit"/>
+            <Button text="Delete" onAction="#onDelete"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Refresh" onAction="#onRefresh"/>
+        </ToolBar>
+    </top>
+
+    <center>
+        <TableView fx:id="deptTable">
+            <columns>
+                <TableColumn fx:id="colId"   text="ID"          prefWidth="80"/>
+                <TableColumn fx:id="colName" text="Name"        prefWidth="200"/>
+                <TableColumn fx:id="colDesc" text="Description" prefWidth="350"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <padding>
+        <Insets topRightBottomLeft="10"/>
+    </padding>
+</BorderPane>

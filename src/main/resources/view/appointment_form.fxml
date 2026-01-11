@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<DialogPane xmlns="http://javafx.com/javafx/21.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.amalitech.hospitalmanagementsystem.controller.AppointmentFormController">
+
+    <content>
+        <VBox spacing="10">
+            <children>
+                <GridPane hgap="10" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="30"/>
+                        <ColumnConstraints percentWidth="70"/>
+                    </columnConstraints>
+
+                    <children>
+                        <Label text="Patient:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <ComboBox fx:id="patientBox" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                        <Label text="Doctor:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <ComboBox fx:id="doctorBox" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                        <Label text="Date:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <DatePicker fx:id="datePicker" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                        <Label text="Time (HH:mm):" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <TextField fx:id="timeField" promptText="09:00" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                        <Label text="Status:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <ComboBox fx:id="statusBox" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                        <Label text="Reason:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                        <TextField fx:id="reasonField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                    </children>
+                </GridPane>
+            </children>
+        </VBox>
+    </content>
+
+    <buttonTypes>
+        <ButtonType fx:constant="OK"/>
+        <ButtonType fx:constant="CANCEL"/>
+    </buttonTypes>
+
+    <headerText>Appointment Form</headerText>
+    <padding><Insets topRightBottomLeft="10"/></padding>
+</DialogPane>

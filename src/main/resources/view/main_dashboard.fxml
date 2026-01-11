@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.amalitech.hospitalmanagementsystem.controller.MainDashboardController">
+
+    <top>
+        <ToolBar>
+            <Label text="Hospital Management System" />
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Patients" onAction="#switchToPatients"/>
+            <Button text="Doctors" onAction="#switchToDoctors"/>
+            <Button text="Departments" onAction="#switchToDepartments"/>
+            <Button text="Appointments" onAction="#switchToAppointments"/>
+        </ToolBar>
+    </top>
+
+    <center>
+        <TabPane fx:id="tabPane">
+            <tabs>
+                <Tab text="Patients" closable="false">
+                    <content>
+                        <fx:include source="patient_table.fxml"/>
+                    </content>
+                </Tab>
+                <Tab text="Doctors" closable="false">
+                    <content>
+                        <fx:include source="doctor_table.fxml"/>
+                    </content>
+                </Tab>
+                <Tab text="Departments" closable="false">
+                    <content>
+                        <fx:include source="department_table.fxml"/>
+                    </content>
+                </Tab>
+
+                <Tab text="Appointments">
+                    <content>
+                        <BorderPane>
+                            <center>
+                                <fx:include source="appointment_table.fxml"/>
+                            </center>
+                        </BorderPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+</BorderPane>
