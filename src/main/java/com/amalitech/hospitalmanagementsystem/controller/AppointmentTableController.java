@@ -37,6 +37,7 @@ public class AppointmentTableController {
     private final AppointmentService service = new AppointmentServiceImpl();
     private final ObservableList<Appointment> data = FXCollections.observableArrayList();
 
+    // caches for patient/doctor display names
     private final Map<Long, String> patientNames = new HashMap<>();
     private final Map<Long, String> doctorNames = new HashMap<>();
 
@@ -49,8 +50,10 @@ public class AppointmentTableController {
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         colReason.setCellValueFactory(new PropertyValueFactory<>("reason"));
 
+        // Load names for fast mapping
         preloadNames();
 
+        // Render names for patient/doctor columns
         colPatient.setCellFactory(col -> new TableCell<>() {
             @Override protected void updateItem(Long id, boolean empty) {
                 super.updateItem(id, empty);

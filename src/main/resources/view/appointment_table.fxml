@@ -8,20 +8,18 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.amalitech.hospitalmanagementsystem.controller.AppointmentTableController">
 
-
     <top>
         <ToolBar>
             <TextField fx:id="searchField" promptText="Search by patient/doctor name or status..."/>
-            <Button text="Search"   onAction="#onSearch"/>
+            <Button text="Search" onAction="#onSearch"/>
             <Separator orientation="VERTICAL"/>
-            <Button text="Add"      onAction="#onAdd"/>
-            <Button text="Edit"     onAction="#onEdit"/>
-            <Button text="Delete"   onAction="#onDelete"/>
+            <Button text="Add" onAction="#onAdd"/>
+            <Button text="Edit" onAction="#onEdit"/>
+            <Button text="Delete" onAction="#onDelete"/>
             <Region HBox.hgrow="ALWAYS"/>
-            <Button text="Refresh"  onAction="#onRefresh"/>
+            <Button text="Refresh" onAction="#onRefresh"/>
         </ToolBar>
     </top>
-
 
     <center>
         <TableView fx:id="apptTable">
