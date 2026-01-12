@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.amalitech.hospitalmanagementsystem.controller.AdminPanelController">
+
+    <top>
+        <Label text="Admin Dashboard" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 10;"/>
+    </top>
+
+    <center>
+        <VBox spacing="15">
+            <children>
+                <HBox spacing="20">
+                    <children>
+                        <VBox spacing="8">
+                            <children>
+                                <Label fx:id="lblPatientCount" text="Patients: 0"/>
+                                <Label fx:id="lblDoctorCount" text="Doctors: 0"/>
+                                <Label fx:id="lblDeptCount" text="Departments: 0"/>
+                                <Label fx:id="lblPatientQueryMs" text="Patient Query: 0 ms"/>
+                                <Label fx:id="lblDoctorQueryMs" text="Doctor Query: 0 ms"/>
+                                <Label fx:id="lblMemory" text="Memory Usage: 0 MB"/>
+                                <Label fx:id="lblThreads" text="Active Threads: 0"/>
+                                <Label fx:id="lblLastRefresh" text="Last Refresh: --"/>
+                                <Button text="Refresh Now" onAction="#refreshAll"/>
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="10">
+                            <children>
+                                <PieChart fx:id="chartPatientsByGender" title="Patients by Gender" prefWidth="320"/>
+                                <BarChart fx:id="chartDoctorsPerDept" title="Doctors per Department" prefWidth="460">
+                                    <xAxis>
+                                        <CategoryAxis label="Department"/>
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis label="Count"/>
+                                    </yAxis>
+                                </BarChart>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+        </VBox>
+    </center>
+
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+</BorderPane>

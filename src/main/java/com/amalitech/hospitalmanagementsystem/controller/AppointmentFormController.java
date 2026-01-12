@@ -30,17 +30,23 @@ public class AppointmentFormController {
 
     @FXML
     public void initialize() {
+        // Load patients & doctors
         PatientDao pDao = new PatientDaoImpl();
         DoctorDao  dDao = new DoctorDaoImpl();
         patientBox.setItems(FXCollections.observableArrayList(pDao.findAll()));
         doctorBox.setItems(FXCollections.observableArrayList(dDao.findAll()));
 
+        // Show names in combo boxes
         patientBox.setConverter(new javafx.util.StringConverter<>() {
-            @Override public String toString(Patient p) { return p == null ? "" : p.getFirstName() + " " + p.getLastName() + " (ID:" + p.getId() + ")"; }
+            @Override public String toString(Patient p) {
+                return p == null ? "" : p.getFirstName() + " " + p.getLastName() + " (ID:" + p.getId() + ")";
+            }
             @Override public Patient fromString(String s) { return null; }
         });
         doctorBox.setConverter(new javafx.util.StringConverter<>() {
-            @Override public String toString(Doctor d) { return d == null ? "" : d.getFirstName() + " " + d.getLastName() + " - " + d.getSpecialization(); }
+            @Override public String toString(Doctor d) {
+                return d == null ? "" : d.getFirstName() + " " + d.getLastName() + " - " + d.getSpecialization();
+            }
             @Override public Doctor fromString(String s) { return null; }
         });
 
@@ -51,17 +57,22 @@ public class AppointmentFormController {
     public void setExisting(Appointment appt) {
         this.existing = appt;
         if (appt != null) {
+            // Pre-select patient & doctor by ID
             if (appt.getPatientId() != null) {
-                for (Patient p : patientBox.getItems())
+                for (Patient p : patientBox.getItems()) {
                     if (appt.getPatientId().equals(p.getId())) { patientBox.getSelectionModel().select(p); break; }
+                }
             }
             if (appt.getDoctorId() != null) {
-                for (Doctor d : doctorBox.getItems())
+                for (Doctor d : doctorBox.getItems()) {
                     if (appt.getDoctorId().equals(d.getId())) { doctorBox.getSelectionModel().select(d); break; }
+                }
             }
             if (appt.getAppointmentDate() != null) {
                 datePicker.setValue(appt.getAppointmentDate().toLocalDate());
-                timeField.setText(String.format("%02d:%02d", appt.getAppointmentDate().getHour(), appt.getAppointmentDate().getMinute()));
+                timeField.setText(String.format("%02d:%02d",
+                        appt.getAppointmentDate().getHour(),
+                        appt.getAppointmentDate().getMinute()));
             }
             if (appt.getStatus() != null) statusBox.getSelectionModel().select(appt.getStatus());
             reasonField.setText(appt.getReason());
@@ -74,7 +85,7 @@ public class AppointmentFormController {
         if (p == null) throw new IllegalArgumentException("Patient is required");
         if (d == null) throw new IllegalArgumentException("Doctor is required");
 
-        LocalDate date = datePicker.getValue(); // do NOT use isBlank() on LocalDate
+        LocalDate date = datePicker.getValue();            // do NOT call isBlank() on dates
         String hhmm    = timeField.getText() == null ? "" : timeField.getText().trim();
         LocalDateTime dt = Appointment.combine(date, hhmm); // throws if invalid
 

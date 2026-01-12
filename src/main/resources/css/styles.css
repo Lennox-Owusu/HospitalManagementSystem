@@ -1,0 +1,54 @@
+
+/* Global styling */
+.root {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-background-color: #f8f9fa;
+}
+
+/* Toolbar styling */
+.tool-bar {
+    -fx-background-color: #264653;
+    -fx-padding: 10;
+}
+.tool-bar .label {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+/* Buttons */
+.button {
+    -fx-background-color: #2a9d8f;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-padding: 8 16;
+}
+.button:hover {
+    -fx-background-color: #21867a;
+}
+
+/* Tabs */
+.tab-pane {
+    -fx-background-color: white;
+}
+.tab {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Table styling */
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5;
+}
+.table-column {
+    -fx-font-size: 14px;
+}
+
+/* Charts */
+.chart-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}

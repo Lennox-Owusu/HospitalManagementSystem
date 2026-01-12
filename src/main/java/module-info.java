@@ -32,4 +32,5 @@ module com.amalitech.hospitalmanagementsystem {
 
     // Expose your root package (application entry points, etc.)
     exports com.amalitech.hospitalmanagementsystem;
+    exports com.amalitech.hospitalmanagementsystem.controller;
 }

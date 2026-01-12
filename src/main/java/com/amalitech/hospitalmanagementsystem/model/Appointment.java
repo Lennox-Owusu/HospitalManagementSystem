@@ -7,42 +7,36 @@ import java.time.LocalTime;
 import java.util.Objects;
 
 public class Appointment {
-    private Long appointmentId;      // maps to appointment_id
+    private Long appointmentId;     // maps to appointment_id
     private Long patientId;
     private Long doctorId;
-    private LocalDateTime appointmentDate;  // timestamp without time zone
-    private String status;                  // SCHEDULED | COMPLETED | CANCELLED
-    private String reason;                  // varchar(255)
-    private LocalDateTime createdAt;        // timestamp without time zone
+    private LocalDateTime appointmentDate; // timestamp without time zone
+    private String status;          // SCHEDULED | COMPLETED | CANCELLED
+    private String reason;          // varchar(255)
+    private LocalDateTime createdAt;
 
     public Long getAppointmentId() { return appointmentId; }
     public void setAppointmentId(Long appointmentId) { this.appointmentId = appointmentId; }
-
     public Long getPatientId() { return patientId; }
     public void setPatientId(Long patientId) { this.patientId = patientId; }
-
     public Long getDoctorId() { return doctorId; }
     public void setDoctorId(Long doctorId) { this.doctorId = doctorId; }
-
     public LocalDateTime getAppointmentDate() { return appointmentDate; }
     public void setAppointmentDate(LocalDateTime appointmentDate) { this.appointmentDate = appointmentDate; }
-
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
-
     public String getReason() { return reason; }
     public void setReason(String reason) { this.reason = reason; }
-
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
-    /** Basic validation aligned to schema */
+    /** Basic validation aligned to your schema */
     public void validate() {
         if (patientId == null || patientId <= 0) throw new IllegalArgumentException("Patient is required.");
         if (doctorId == null || doctorId <= 0) throw new IllegalArgumentException("Doctor is required.");
         if (appointmentDate == null) throw new IllegalArgumentException("Appointment date/time is required.");
         if (status == null || status.isBlank()) status = "SCHEDULED";
-        // Optional rule (remove if not desired): prevent past scheduling
+        // prevent past scheduling (optional; remove if not desired)
         if (appointmentDate.toLocalDate().isBefore(LocalDate.now())) {
             throw new IllegalArgumentException("Appointment date cannot be in the past.");
         }
@@ -51,7 +45,7 @@ public class Appointment {
         }
     }
 
-    /** Helper to build LocalDateTime from UI parts (DatePicker + HH:mm text) */
+    /** Helper for building LocalDateTime from UI parts */
     public static LocalDateTime combine(LocalDate d, String hhmm) {
         if (d == null) return null;
         if (hhmm == null || hhmm.isBlank()) throw new IllegalArgumentException("Time is required (HH:mm).");
@@ -66,7 +60,6 @@ public class Appointment {
         return Objects.equals(appointmentId, that.appointmentId);
     }
     @Override public int hashCode() { return Objects.hash(appointmentId); }
-
     @Override public String toString() {
         return "Appointment{appointmentId=" + appointmentId +
                 ", patientId=" + patientId +
@@ -75,5 +68,5 @@ public class Appointment {
                 ", status='" + status + '\'' +
                 '}';
     }
-
 }
+
