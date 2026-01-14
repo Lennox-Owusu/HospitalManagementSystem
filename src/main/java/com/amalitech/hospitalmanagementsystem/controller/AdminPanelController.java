@@ -8,6 +8,18 @@ import com.amalitech.hospitalmanagementsystem.service.DoctorService;
 import com.amalitech.hospitalmanagementsystem.service.impl.PatientServiceImpl;
 import com.amalitech.hospitalmanagementsystem.service.impl.DoctorServiceImpl;
 import com.amalitech.hospitalmanagementsystem.dao.impl.DepartmentDaoImpl;
+
+import com.amalitech.hospitalmanagementsystem.service.AppointmentService;
+import com.amalitech.hospitalmanagementsystem.service.impl.AppointmentServiceImpl;
+
+import com.amalitech.hospitalmanagementsystem.service.PrescriptionService;
+import com.amalitech.hospitalmanagementsystem.service.impl.PrescriptionServiceImpl;
+
+import com.amalitech.hospitalmanagementsystem.service.InventoryService;
+import com.amalitech.hospitalmanagementsystem.service.impl.InventoryServiceImpl;
+
+import com.amalitech.hospitalmanagementsystem.util.QueryTimer;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
@@ -21,12 +33,21 @@ import java.util.*;
 import java.util.concurrent.*;
 
 public class AdminPanelController {
-    @FXML private Label lblPatientCount, lblDoctorCount, lblDeptCount, lblPatientQueryMs, lblDoctorQueryMs, lblMemory, lblThreads, lblLastRefresh;
+
+    @FXML private Label lblPatientCount, lblDoctorCount, lblDeptCount;
+    @FXML private Label lblPatientQueryMs, lblDoctorQueryMs;
+    @FXML private Label lblAppointmentQueryMs, lblPrescriptionQueryMs, lblInventoryQueryMs;
+    @FXML private Label lblMemory, lblThreads, lblLastRefresh;
+
     @FXML private PieChart chartPatientsByGender;
     @FXML private BarChart<String, Number> chartDoctorsPerDept;
 
     private final PatientService patientService = new PatientServiceImpl(new com.amalitech.hospitalmanagementsystem.dao.impl.PatientDaoImpl());
     private final DoctorService doctorService = new DoctorServiceImpl(new com.amalitech.hospitalmanagementsystem.dao.impl.DoctorDaoImpl());
+    private final AppointmentService appointmentService = new AppointmentServiceImpl();
+    private final PrescriptionService prescriptionService = new PrescriptionServiceImpl();
+    private final InventoryService inventoryService = new InventoryServiceImpl();
+
     private final DepartmentDaoImpl departmentDao = new DepartmentDaoImpl();
 
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(r -> {
@@ -40,6 +61,7 @@ public class AdminPanelController {
     @FXML
     public void initialize() {
         refreshAll();
+
         scheduler.scheduleAtFixedRate(() -> {
             try {
                 Map<String, Object> snapshot = collectMetricsSnapshot();
@@ -50,17 +72,30 @@ public class AdminPanelController {
 
     @FXML
     public void refreshAll() {
-        CompletableFuture.supplyAsync(this::collectMetricsSnapshot)
+        CompletableFuture
+                .supplyAsync(this::collectMetricsSnapshot)
                 .thenAccept(snapshot -> Platform.runLater(() -> applySnapshot(snapshot)));
     }
 
+    /**
+     * ============================
+     * METRICS COLLECTION
+     * ============================
+     */
     private Map<String, Object> collectMetricsSnapshot() {
         Map<String, Object> m = new HashMap<>();
-        long t0 = System.nanoTime();
+
+        // Timed queries using QueryTimer
+        double patientMs = QueryTimer.measure(() -> patientService.getAll());
         List<Patient> patients = patientService.getAll();
-        long t1 = System.nanoTime();
+
+        double doctorMs = QueryTimer.measure(() -> doctorService.getAll());
         List<Doctor> doctors = doctorService.getAll();
-        long t2 = System.nanoTime();
+
+        double apptMs = QueryTimer.measure(() -> appointmentService.getAll());
+        double prescMs = QueryTimer.measure(() -> prescriptionService.getAll());
+        double invMs   = QueryTimer.measure(() -> inventoryService.getAll());
+
         int deptCount = departmentDao.findAll().size();
 
         Runtime rt = Runtime.getRuntime();
@@ -69,23 +104,40 @@ public class AdminPanelController {
 
         m.put("patientCount", patients.size());
         m.put("doctorCount", doctors.size());
-        m.put("patientMs", (t1 - t0) / 1_000_000.0);
-        m.put("doctorMs", (t2 - t1) / 1_000_000.0);
+        m.put("patientMs", patientMs);
+        m.put("doctorMs", doctorMs);
+        m.put("appointmentMs", apptMs);
+        m.put("prescriptionMs", prescMs);
+        m.put("inventoryMs", invMs);
+
         m.put("deptCount", deptCount);
         m.put("usedMb", usedMb);
         m.put("threads", threads);
         m.put("timestamp", LocalDateTime.now().format(TS_FMT));
+
         m.put("genderBreakdown", countPatientsByGender(patients));
         m.put("doctorsPerDept", countDoctorsPerDepartment(doctors));
+
         return m;
     }
 
+    /**
+     * ============================
+     * APPLY SNAPSHOT TO UI
+     * ============================
+     */
     private void applySnapshot(Map<String, Object> s) {
         lblPatientCount.setText("Patients: " + s.get("patientCount"));
         lblDoctorCount.setText("Doctors: " + s.get("doctorCount"));
         lblDeptCount.setText("Departments: " + s.get("deptCount"));
+
         lblPatientQueryMs.setText(String.format("Patient Query: %.2f ms", s.get("patientMs")));
         lblDoctorQueryMs.setText(String.format("Doctor Query: %.2f ms", s.get("doctorMs")));
+
+        lblAppointmentQueryMs.setText("Appointment Query: " + String.format("%.2f ms", s.get("appointmentMs")));
+        lblPrescriptionQueryMs.setText("Prescription Query: " + String.format("%.2f ms", s.get("prescriptionMs")));
+        lblInventoryQueryMs.setText("Inventory Query: " + String.format("%.2f ms", s.get("inventoryMs")));
+
         lblMemory.setText("Memory Usage: " + s.get("usedMb") + " MB");
         lblThreads.setText("Active Threads: " + s.get("threads"));
         lblLastRefresh.setText("Last Refresh: " + s.get("timestamp"));
@@ -99,11 +151,17 @@ public class AdminPanelController {
         populateDoctorsBar(perDept);
     }
 
+    /**
+     * ============================
+     * DATA HELPERS
+     * ============================
+     */
     private Map<String, Integer> countPatientsByGender(List<Patient> patients) {
         Map<String, Integer> map = new LinkedHashMap<>();
         map.put("M", 0);
         map.put("F", 0);
         map.put("Other", 0);
+
         for (Patient p : patients) {
             String g = p.getGender() == null ? "Other" : p.getGender().trim();
             if (!map.containsKey(g)) g = "Other";
@@ -115,6 +173,7 @@ public class AdminPanelController {
     private Map<String, Integer> countDoctorsPerDepartment(List<Doctor> doctors) {
         Map<String, Integer> out = new TreeMap<>();
         departmentDao.findAll().forEach(d -> out.put(d.getName(), 0));
+
         for (Doctor d : doctors) {
             String deptName = (d.getDepartmentId() == null) ? "Unassigned" : "Dept " + d.getDepartmentId();
             out.put(deptName, out.getOrDefault(deptName, 0) + 1);
@@ -133,6 +192,7 @@ public class AdminPanelController {
         chartDoctorsPerDept.getData().clear();
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Doctors");
+
         perDept.forEach((dept, count) -> series.getData().add(new XYChart.Data<>(dept, count)));
         chartDoctorsPerDept.getData().add(series);
     }

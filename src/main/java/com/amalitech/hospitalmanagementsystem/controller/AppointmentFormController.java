@@ -54,6 +54,36 @@ public class AppointmentFormController {
         statusBox.getSelectionModel().select("SCHEDULED");
     }
 
+
+    private String normalizeTime(String raw) {
+        if (raw == null || raw.isBlank())
+            throw new IllegalArgumentException("Time is required (HH:mm)");
+
+        raw = raw.trim();
+
+        // If user enters only "9" → convert to 09:00
+        if (raw.matches("\\d{1,2}")) {
+            int h = Integer.parseInt(raw);
+            if (h < 0 || h > 23)
+                throw new IllegalArgumentException("Hour must be 0–23");
+            return String.format("%02d:00", h);
+        }
+
+        // If user enters "9:5" → convert to 09:05
+        if (raw.matches("\\d{1,2}:\\d{1,2}")) {
+            String[] parts = raw.split(":");
+            int h = Integer.parseInt(parts[0]);
+            int m = Integer.parseInt(parts[1]);
+            if (h < 0 || h > 23 || m < 0 || m > 59)
+                throw new IllegalArgumentException("Invalid time");
+            return String.format("%02d:%02d", h, m);
+        }
+
+        // Otherwise assume it's already HH:mm
+        return raw;
+    }
+
+
     public void setExisting(Appointment appt) {
         this.existing = appt;
         if (appt != null) {
@@ -79,15 +109,20 @@ public class AppointmentFormController {
         }
     }
 
+
     public Appointment collectResult() {
         Patient p = patientBox.getValue();
         Doctor  d = doctorBox.getValue();
         if (p == null) throw new IllegalArgumentException("Patient is required");
         if (d == null) throw new IllegalArgumentException("Doctor is required");
 
-        LocalDate date = datePicker.getValue();            // do NOT call isBlank() on dates
-        String hhmm    = timeField.getText() == null ? "" : timeField.getText().trim();
-        LocalDateTime dt = Appointment.combine(date, hhmm); // throws if invalid
+        LocalDate date = datePicker.getValue();
+        if (date == null)
+            throw new IllegalArgumentException("Date is required");
+
+        // FIX: normalize time
+        String hhmm = normalizeTime(timeField.getText());
+        LocalDateTime dt = Appointment.combine(date, hhmm);
 
         String status = statusBox.getValue();
         if (status == null || status.isBlank()) status = "SCHEDULED";
@@ -99,7 +134,10 @@ public class AppointmentFormController {
         out.setStatus(status);
         out.setReason(reasonField.getText());
 
-        if (existing != null) out.setAppointmentId(existing.getAppointmentId());
+        if (existing != null)
+            out.setAppointmentId(existing.getAppointmentId());
+
         return out;
     }
+
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<DialogPane xmlns="http://javafx.com/javafx/21.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.amalitech.hospitalmanagementsystem.controller.FeedbackFormController">
+
+    <content>
+        <VBox spacing="10">
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="30"/>
+                    <ColumnConstraints percentWidth="70"/>
+                </columnConstraints>
+
+                <Label text="Patient:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="patientBox" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Doctor (optional):" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="doctorBox" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Rating (1-5):" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <Spinner fx:id="ratingSpinner" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Comments:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextArea fx:id="commentsArea" GridPane.rowIndex="3" GridPane.columnIndex="1" prefRowCount="4"/>
+            </GridPane>
+        </VBox>
+    </content>
+
+    <buttonTypes>
+        <ButtonType fx:constant="OK"/>
+        <ButtonType fx:constant="CANCEL"/>
+    </buttonTypes>
+
+    <headerText>Patient Feedback</headerText>
+</DialogPane>
+

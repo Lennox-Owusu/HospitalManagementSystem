@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.amalitech.hospitalmanagementsystem.controller.FeedbackTableController">
+
+    <top>
+        <ToolBar>
+            <TextField fx:id="searchField" promptText="Search by patient/doctor name or rating..."/>
+            <Button text="Search" onAction="#onSearch"/>
+            <Separator orientation="VERTICAL"/>
+            <Button text="Add" onAction="#onAdd"/>
+            <Button text="Edit" onAction="#onEdit"/>
+            <Button text="Delete" onAction="#onDelete"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Refresh" onAction="#onRefresh"/>
+        </ToolBar>
+    </top>
+
+    <center>
+        <TableView fx:id="table">
+            <columns>
+                <TableColumn fx:id="colId"       text="ID"           prefWidth="80"/>
+                <TableColumn fx:id="colPatient"  text="Patient"      prefWidth="160"/>
+                <TableColumn fx:id="colDoctor"   text="Doctor"       prefWidth="160"/>
+                <TableColumn fx:id="colRating"   text="Rating"       prefWidth="80"/>
+                <TableColumn fx:id="colComments" text="Comments"     prefWidth="360"/>
+                <TableColumn fx:id="colCreated"  text="Created"      prefWidth="160"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <padding><Insets topRightBottomLeft="10"/></padding>
+</BorderPane>
+

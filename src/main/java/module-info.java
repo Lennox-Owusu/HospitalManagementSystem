@@ -4,6 +4,9 @@ module com.amalitech.hospitalmanagementsystem {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
+    requires org.kordamp.ikonli.fontawesome5;
+
+
 
     // 3rd‑party JavaFX libs (you included these in pom.xml)
     requires org.controlsfx.controls;

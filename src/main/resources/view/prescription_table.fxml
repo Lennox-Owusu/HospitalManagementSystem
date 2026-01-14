@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.amalitech.hospitalmanagementsystem.controller.PrescriptionTableController">
+
+    <top>
+        <ToolBar>
+            <TextField fx:id="searchField" promptText="Search by Patient/Doctor ID..."/>
+            <Button text="Search" onAction="#onSearch"/>
+            <Separator orientation="VERTICAL"/>
+            <Button text="Add" onAction="#onAdd"/>
+            <Button text="Edit" onAction="#onEdit"/>
+            <Button text="Delete" onAction="#onDelete"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Refresh" onAction="#onRefresh"/>
+        </ToolBar>
+    </top>
+
+    <center>
+        <TableView fx:id="table">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="80"/>
+                <TableColumn fx:id="colPatient" text="Patient ID" prefWidth="120"/>
+                <TableColumn fx:id="colDoctor" text="Doctor ID" prefWidth="120"/>
+                <TableColumn fx:id="colIssued" text="Issued At" prefWidth="180"/>
+                <TableColumn fx:id="colNotes" text="Notes" prefWidth="360"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <padding><Insets topRightBottomLeft="10"/></padding>
+</BorderPane>

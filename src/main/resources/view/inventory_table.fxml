@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.amalitech.hospitalmanagementsystem.controller.InventoryTableController">
+
+    <top>
+        <ToolBar>
+            <TextField fx:id="searchField" promptText="Search by name/category..."/>
+            <Button text="Search" onAction="#onSearch"/>
+            <Separator orientation="VERTICAL"/>
+            <Button text="Add" onAction="#onAdd"/>
+            <Button text="Edit" onAction="#onEdit"/>
+            <Button text="Delete" onAction="#onDelete"/>
+            <Separator orientation="VERTICAL"/>
+            <Label text="Adjust Qty:"/>
+            <TextField fx:id="deltaField" promptText="+10 / -5" prefWidth="80"/>
+            <Button text="Apply" onAction="#onAdjustQuantity"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Refresh" onAction="#onRefresh"/>
+        </ToolBar>
+    </top>
+
+    <center>
+        <TableView fx:id="table">
+            <columns>
+                <TableColumn fx:id="colId"      text="ID"       prefWidth="70"/>
+                <TableColumn fx:id="colName"    text="Name"     prefWidth="220"/>
+                <TableColumn fx:id="colCategory" text="Category" prefWidth="160"/>
+                <TableColumn fx:id="colQty"     text="Quantity" prefWidth="100"/>
+                <TableColumn fx:id="colUnit"    text="Unit"     prefWidth="100"/>
+                <TableColumn fx:id="colReorder" text="Reorder"  prefWidth="100"/>
+                <TableColumn fx:id="colUpdated" text="Updated"  prefWidth="160"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <padding><Insets topRightBottomLeft="10"/></padding>
+</BorderPane>

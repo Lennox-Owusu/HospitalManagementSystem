@@ -9,7 +9,7 @@
             fx:controller="com.amalitech.hospitalmanagementsystem.controller.AdminPanelController">
 
     <top>
-        <Label text="Admin Dashboard" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 10;"/>
+        <Label text="Admin Dashboard" styleClass="heading" />
     </top>
 
     <center>
@@ -27,7 +27,11 @@
                                 <Label fx:id="lblMemory" text="Memory Usage: 0 MB"/>
                                 <Label fx:id="lblThreads" text="Active Threads: 0"/>
                                 <Label fx:id="lblLastRefresh" text="Last Refresh: --"/>
+                                <Label fx:id="lblAppointmentQueryMs" text="Appointment Query: 0 ms" />
+                                <Label fx:id="lblPrescriptionQueryMs" text="Prescription Query: 0 ms" />
+                                <Label fx:id="lblInventoryQueryMs" text="Inventory Query: 0 ms" />
                                 <Button text="Refresh Now" onAction="#refreshAll"/>
+
                             </children>
                         </VBox>
 

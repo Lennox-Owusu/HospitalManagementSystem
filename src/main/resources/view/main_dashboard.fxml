@@ -60,6 +60,31 @@
                         <fx:include source="reports_tab.fxml"/>
                     </content>
                 </Tab>
+
+                <!-- Inside TabPane tabs -->
+                <Tab text="Prescriptions" closable="false">
+                    <content>
+                        <fx:include source="prescription_table.fxml"/>
+                    </content>
+                </Tab>
+
+                <Tab text="Feedback" closable="false">
+                    <content>
+                        <fx:include source="feedback_table.fxml"/>
+                    </content>
+                </Tab>
+
+                <Tab text="Inventory" closable="false">
+                    <content>
+                        <fx:include source="inventory_table.fxml"/>
+                    </content>
+                </Tab>
+                <Tab text="Overview" closable="false">
+                    <content>
+                        <fx:include source="overview_dashboard.fxml"/>
+                    </content>
+                </Tab>
+
             </tabs>
         </TabPane>
     </center>

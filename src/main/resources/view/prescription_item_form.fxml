@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<DialogPane xmlns="http://javafx.com/javafx/21.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.amalitech.hospitalmanagementsystem.controller.PrescriptionItemFormController">
+
+    <content>
+        <VBox spacing="10">
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="35"/>
+                    <ColumnConstraints percentWidth="65"/>
+                </columnConstraints>
+
+                <Label text="Medication:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="medicationField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Dosage:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="dosageField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Frequency:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="frequencyField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Duration (days):" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="durationField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Instructions:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextArea fx:id="instructionsArea" GridPane.rowIndex="4" GridPane.columnIndex="1" prefRowCount="3"/>
+            </GridPane>
+        </VBox>
+    </content>
+
+    <buttonTypes>
+        <ButtonType fx:constant="OK"/>
+        <ButtonType fx:constant="CANCEL"/>
+    </buttonTypes>
+
+    <headerText>Prescription Item</headerText>
+</DialogPane>
