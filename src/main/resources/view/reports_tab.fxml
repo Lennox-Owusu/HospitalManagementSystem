@@ -19,8 +19,10 @@
 
     <!-- Charts area -->
     <center>
-        <VBox spacing="15">
+        <VBox spacing="18">
             <children>
+
+                <!-- Row 1: existing charts -->
                 <HBox spacing="20">
                     <children>
                         <PieChart fx:id="chartPatientsByGender" title="Patients by Gender" prefWidth="420"/>
@@ -35,14 +37,47 @@
                     </children>
                 </HBox>
 
-                <LineChart fx:id="chartAppointmentsTrend" title="Appointments Trend">
-                    <xAxis>
-                        <CategoryAxis label="Date"/>
-                    </xAxis>
-                    <yAxis>
-                        <NumberAxis label="Appointments"/>
-                    </yAxis>
-                </LineChart>
+                <!-- Row 2: existing appointments trend + NEW feedback ratings -->
+                <HBox spacing="20">
+                    <children>
+                        <LineChart fx:id="chartAppointmentsTrend" title="Appointments Trend">
+                            <xAxis>
+                                <CategoryAxis label="Date"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis label="Appointments"/>
+                            </yAxis>
+                        </LineChart>
+
+                        <!-- NEW: Feedback Ratings Distribution -->
+                        <PieChart fx:id="chartFeedbackRatings" title="Feedback Ratings (1–5)" prefWidth="420"/>
+                    </children>
+                </HBox>
+
+                <!-- Row 3: NEW inventory analytics -->
+                <HBox spacing="20">
+                    <children>
+                        <!-- NEW: Low stock by category -->
+                        <BarChart fx:id="chartLowStockByCategory" title="Inventory Below Reorder by Category" prefWidth="520">
+                            <xAxis>
+                                <CategoryAxis label="Category"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis label="Items Below Reorder"/>
+                            </yAxis>
+                        </BarChart>
+
+                        <!-- NEW: Top N low-stock items -->
+                        <BarChart fx:id="chartTopLowStockItems" title="Top Low-Stock Items (Deficit to Reorder)" prefWidth="520">
+                            <xAxis>
+                                <CategoryAxis label="Item"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis label="Units Needed to reach Reorder"/>
+                            </yAxis>
+                        </BarChart>
+                    </children>
+                </HBox>
             </children>
 
             <!-- VBox padding -->
