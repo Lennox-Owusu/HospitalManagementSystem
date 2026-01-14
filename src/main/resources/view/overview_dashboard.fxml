@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.amalitech.hospitalmanagementsystem.controller.OverviewDashboardController">
+
+    <top>
+        <Label text="Hospital Overview"
+               styleClass="dashboard-title"
+               BorderPane.alignment="CENTER_LEFT"
+        />
+    </top>
+
+    <center>
+        <VBox spacing="20" alignment="TOP_CENTER">
+            <padding>
+                <Insets top="20" left="20" right="20" bottom="20"/>
+            </padding>
+
+            <!-- ROW 1: KPI CARDS -->
+            <HBox spacing="20" alignment="CENTER">
+                <!-- Patients -->
+                <StackPane styleClass="kpi-card">
+                    <VBox alignment="CENTER" spacing="5">
+                        <FontIcon iconLiteral="fas-users" iconSize="38" styleClass="icon-blue"/>
+                        <Label text="Patients" styleClass="kpi-label"/>
+                        <Label fx:id="lblTotalPatients" text="0" styleClass="kpi-value"/>
+                    </VBox>
+                </StackPane>
+
+                <!-- Doctors -->
+                <StackPane styleClass="kpi-card">
+                    <VBox alignment="CENTER" spacing="5">
+                        <FontIcon iconLiteral="fas-user-md" iconSize="38" styleClass="icon-green"/>
+                        <Label text="Doctors" styleClass="kpi-label"/>
+                        <Label fx:id="lblTotalDoctors" text="0" styleClass="kpi-value"/>
+                    </VBox>
+                </StackPane>
+
+                <!-- Departments -->
+                <StackPane styleClass="kpi-card">
+                    <VBox alignment="CENTER" spacing="5">
+                        <FontIcon iconLiteral="fas-building" iconSize="38" styleClass="icon-purple"/>
+                        <Label text="Departments" styleClass="kpi-label"/>
+                        <Label fx:id="lblTotalDepartments" text="0" styleClass="kpi-value"/>
+                    </VBox>
+                </StackPane>
+
+                <!-- Today Appointments -->
+                <StackPane styleClass="kpi-card">
+                    <VBox alignment="CENTER" spacing="5">
+                        <FontIcon iconLiteral="fas-calendar-day" iconSize="38" styleClass="icon-orange"/>
+                        <Label text="Today’s Appointments" styleClass="kpi-label"/>
+                        <Label fx:id="lblTodayAppointments" text="0" styleClass="kpi-value"/>
+                    </VBox>
+                </StackPane>
+            </HBox>
+
+            <!-- ROW 2: EXTRA CARDS -->
+            <HBox spacing="20" alignment="CENTER">
+                <!-- Average Rating -->
+                <StackPane styleClass="kpi-card-wide">
+                    <VBox alignment="CENTER" spacing="10">
+                        <FontIcon iconLiteral="fas-star" iconSize="40" styleClass="icon-yellow"/>
+
+                        <Label text="Average Feedback Rating" styleClass="kpi-label"/>
+                        <Label fx:id="lblAverageRating" text="0.0" styleClass="kpi-value"/>
+
+                        <Label fx:id="lblTotalFeedback" text="0 feedback entries"
+                               style="-fx-text-fill: #78909C; -fx-font-size: 13px;"/>
+                    </VBox>
+                </StackPane>
+
+                <!-- Low Stock Items -->
+                <StackPane styleClass="kpi-card-wide">
+                    <VBox alignment="CENTER" spacing="10">
+                        <FontIcon iconLiteral="fas-exclamation-circle" iconSize="40" styleClass="icon-red"/>
+
+                        <Label text="Low Stock Inventory Items" styleClass="kpi-label"/>
+                        <Label fx:id="lblLowStockCount" text="0" styleClass="kpi-value"/>
+
+                        <Label text="Items at or below reorder level"
+                               style="-fx-text-fill: #78909C; -fx-font-size: 13px;"/>
+                    </VBox>
+                </StackPane>
+            </HBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>
