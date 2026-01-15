@@ -9,11 +9,13 @@ import com.amalitech.hospitalmanagementsystem.service.impl.PatientServiceImpl;
 import com.amalitech.hospitalmanagementsystem.service.impl.DoctorServiceImpl;
 import com.amalitech.hospitalmanagementsystem.dao.impl.DepartmentDaoImpl;
 
+
 import com.amalitech.hospitalmanagementsystem.service.AppointmentService;
 import com.amalitech.hospitalmanagementsystem.service.impl.AppointmentServiceImpl;
 
 import com.amalitech.hospitalmanagementsystem.service.PrescriptionService;
 import com.amalitech.hospitalmanagementsystem.service.impl.PrescriptionServiceImpl;
+
 
 import com.amalitech.hospitalmanagementsystem.service.InventoryService;
 import com.amalitech.hospitalmanagementsystem.service.impl.InventoryServiceImpl;
@@ -33,6 +35,7 @@ import java.util.*;
 import java.util.concurrent.*;
 
 public class AdminPanelController {
+    @FXML private Label lblNotesQueryMs;
 
     @FXML private Label lblPatientCount, lblDoctorCount, lblDeptCount;
     @FXML private Label lblPatientQueryMs, lblDoctorQueryMs;
@@ -41,6 +44,10 @@ public class AdminPanelController {
 
     @FXML private PieChart chartPatientsByGender;
     @FXML private BarChart<String, Number> chartDoctorsPerDept;
+
+    private final com.amalitech.hospitalmanagementsystem.nosql.PatientNoteService noteService =
+            new com.amalitech.hospitalmanagementsystem.nosql.PatientNoteService();
+
 
     private final PatientService patientService = new PatientServiceImpl(new com.amalitech.hospitalmanagementsystem.dao.impl.PatientDaoImpl());
     private final DoctorService doctorService = new DoctorServiceImpl(new com.amalitech.hospitalmanagementsystem.dao.impl.DoctorDaoImpl());
@@ -77,24 +84,31 @@ public class AdminPanelController {
                 .thenAccept(snapshot -> Platform.runLater(() -> applySnapshot(snapshot)));
     }
 
-    /**
-     * ============================
-     * METRICS COLLECTION
-     * ============================
-     */
+
+
+     //METRICS COLLECTION
     private Map<String, Object> collectMetricsSnapshot() {
         Map<String, Object> m = new HashMap<>();
 
         // Timed queries using QueryTimer
-        double patientMs = QueryTimer.measure(() -> patientService.getAll());
+        double patientMs = QueryTimer.measure(patientService::getAll);
         List<Patient> patients = patientService.getAll();
 
-        double doctorMs = QueryTimer.measure(() -> doctorService.getAll());
+
+        double notesMs = com.amalitech.hospitalmanagementsystem.util.QueryTimer.measure(() -> {
+            // Choose what to time: list by patient or text search.
+            // Example: text search for the term "fever"
+            noteService.search("fever"); // requires text index; see docs. [2](https://www.mongodb.com/docs/drivers/java/sync/current/crud/query-documents/text/)
+        });
+        m.put("notesMs", notesMs);
+
+
+        double doctorMs = QueryTimer.measure(doctorService::getAll);
         List<Doctor> doctors = doctorService.getAll();
 
-        double apptMs = QueryTimer.measure(() -> appointmentService.getAll());
-        double prescMs = QueryTimer.measure(() -> prescriptionService.getAll());
-        double invMs   = QueryTimer.measure(() -> inventoryService.getAll());
+        double apptMs = QueryTimer.measure(appointmentService::getAll);
+        double prescMs = QueryTimer.measure(prescriptionService::getAll);
+        double invMs   = QueryTimer.measure(inventoryService::getAll);
 
         int deptCount = departmentDao.findAll().size();
 
@@ -121,15 +135,15 @@ public class AdminPanelController {
         return m;
     }
 
-    /**
-     * ============================
-     * APPLY SNAPSHOT TO UI
-     * ============================
-     */
+
+
+     //APPLY SNAPSHOT TO UI
     private void applySnapshot(Map<String, Object> s) {
         lblPatientCount.setText("Patients: " + s.get("patientCount"));
         lblDoctorCount.setText("Doctors: " + s.get("doctorCount"));
         lblDeptCount.setText("Departments: " + s.get("deptCount"));
+
+        lblNotesQueryMs.setText("Notes Query: " + String.format("%.2f ms", s.get("notesMs")));
 
         lblPatientQueryMs.setText(String.format("Patient Query: %.2f ms", s.get("patientMs")));
         lblDoctorQueryMs.setText(String.format("Doctor Query: %.2f ms", s.get("doctorMs")));

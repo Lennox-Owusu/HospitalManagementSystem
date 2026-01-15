@@ -39,8 +39,7 @@ public class PrescriptionItem {
 
     @Override public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PrescriptionItem)) return false;
-        PrescriptionItem that = (PrescriptionItem) o;
+        if (!(o instanceof PrescriptionItem that)) return false;
         return Objects.equals(itemId, that.itemId);
     }
     @Override public int hashCode() { return Objects.hash(itemId); }

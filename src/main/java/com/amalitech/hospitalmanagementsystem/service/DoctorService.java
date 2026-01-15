@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DoctorService {
-    Long register(Doctor doctor);
+    void register(Doctor doctor);
     boolean update(Doctor doctor);
     boolean remove(Long id);
     Optional<Doctor> getById(Long id);

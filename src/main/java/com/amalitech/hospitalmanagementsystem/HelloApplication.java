@@ -1,6 +1,7 @@
 
 package com.amalitech.hospitalmanagementsystem;
 
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,8 +9,8 @@ import javafx.scene.Parent;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
 
-import java.util.Objects;
 
+import java.util.Objects;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
@@ -28,7 +29,12 @@ public class HelloApplication extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
-        launch(args);
+
+    @Override
+    public void stop() {
+        System.out.println("Closing MongoDB connection...");
+        com.amalitech.hospitalmanagementsystem.nosql.MongoConnectionUtil.shutdown();
     }
+
+
 }

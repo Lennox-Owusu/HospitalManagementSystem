@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PatientService {
-    Long register(Patient patient);
+    void register(Patient patient);
     boolean update(Patient patient);
     boolean remove(Long id);
     Optional<Patient> getById(Long id);

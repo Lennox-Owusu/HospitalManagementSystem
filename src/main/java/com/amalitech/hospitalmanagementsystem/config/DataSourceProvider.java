@@ -14,7 +14,6 @@ public final class DataSourceProvider {
     public static synchronized DataSource get() {
         if (ds == null) {
             HikariConfig cfg = new HikariConfig();
-            // TODO: Adjust to your actual DB name/credentials
             cfg.setJdbcUrl(System.getProperty("db.url", "jdbc:postgresql://localhost:5432/hospital_db"));
             cfg.setUsername(System.getProperty("db.user", "postgres"));
             cfg.setPassword(System.getProperty("db.pass", "postgres"));

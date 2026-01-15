@@ -12,7 +12,6 @@ import java.util.Optional;
 public class PrescriptionItemServiceImpl implements PrescriptionItemService {
     private final PrescriptionItemDao dao;
     public PrescriptionItemServiceImpl() { this.dao = new PrescriptionItemDaoImpl(); }
-    public PrescriptionItemServiceImpl(PrescriptionItemDao dao) { this.dao = dao; }
 
     @Override public Long create(PrescriptionItem item) { item.validate(); return dao.create(item); }
     @Override public boolean update(PrescriptionItem item) {
@@ -31,7 +30,7 @@ public class PrescriptionItemServiceImpl implements PrescriptionItemService {
     @Override public List<PrescriptionItem> findByPrescription(Long prescriptionId) {
         return dao.findByPrescription(prescriptionId);
     }
-    @Override public boolean removeAllForPrescription(Long prescriptionId) {
-        return dao.deleteByPrescription(prescriptionId);
+    @Override public void removeAllForPrescription(Long prescriptionId) {
+        dao.deleteByPrescription(prescriptionId);
     }
 }

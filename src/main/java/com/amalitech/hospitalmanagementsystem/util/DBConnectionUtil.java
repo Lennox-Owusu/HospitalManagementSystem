@@ -13,7 +13,7 @@ import java.util.Properties;
 
 public final class DBConnectionUtil {
     private static final Logger log = LoggerFactory.getLogger(DBConnectionUtil.class);
-    private static HikariDataSource dataSource;
+    private static final HikariDataSource dataSource;
 
     static {
         try (InputStream in = DBConnectionUtil.class.getResourceAsStream("/db/db.properties"))  {

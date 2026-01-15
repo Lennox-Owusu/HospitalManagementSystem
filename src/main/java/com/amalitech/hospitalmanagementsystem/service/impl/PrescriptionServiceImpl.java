@@ -13,7 +13,6 @@ import java.util.Optional;
 public class PrescriptionServiceImpl implements PrescriptionService {
     private final PrescriptionDao dao;
     public PrescriptionServiceImpl() { this.dao = new PrescriptionDaoImpl(); }
-    public PrescriptionServiceImpl(PrescriptionDao dao) { this.dao = dao; }
 
     @Override public Long create(Prescription p) { p.validate(); return dao.create(p); }
     @Override public boolean update(Prescription p) {

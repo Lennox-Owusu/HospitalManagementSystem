@@ -12,7 +12,6 @@ import java.util.Optional;
 public class PatientFeedbackServiceImpl implements PatientFeedbackService {
     private final PatientFeedbackDao dao;
     public PatientFeedbackServiceImpl() { this.dao = new PatientFeedbackDaoImpl(); }
-    public PatientFeedbackServiceImpl(PatientFeedbackDao dao) { this.dao = dao; }
 
     @Override public Long create(PatientFeedback f) { f.validate(); return dao.create(f); }
     @Override public boolean update(PatientFeedback f) {

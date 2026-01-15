@@ -8,7 +8,7 @@ module com.amalitech.hospitalmanagementsystem {
 
 
 
-    // 3rd‑party JavaFX libs (you included these in pom.xml)
+    // 3rd‑party JavaFX libs
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
@@ -17,23 +17,29 @@ module com.amalitech.hospitalmanagementsystem {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
 
+
+
     // JDBC / Logging / Pool
     requires java.sql;
     requires org.slf4j;
     requires com.zaxxer.hikari;
+    requires org.mongodb.driver.core;
+    requires org.mongodb.driver.sync.client;
+    requires org.mongodb.bson;
 
-    // ---- Reflection access for FXML & TableView ----
+
+    //Reflection access for FXML & TableView
     // Allow FXMLLoader to access controller classes
     opens com.amalitech.hospitalmanagementsystem.controller to javafx.fxml;
 
-    // Allow JavaFX to reflect on model getters/setters (TableView PropertyValueFactory)
+    // TableView PropertyValueFactory
     opens com.amalitech.hospitalmanagementsystem.model to javafx.base;
 
     // If you still use FXML in the root package (e.g., HelloController), keep this:
     opens com.amalitech.hospitalmanagementsystem to javafx.fxml;
 
 
-    // Expose your root package (application entry points, etc.)
+    // application entry points
     exports com.amalitech.hospitalmanagementsystem;
     exports com.amalitech.hospitalmanagementsystem.controller;
 }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<DialogPane xmlns="http://javafx.com/javafx/21.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.amalitech.hospitalmanagementsystem.controller.PatientNotesDialogController">
+
+    <content>
+        <VBox spacing="8.0">
+            <HBox spacing="8.0">
+                <Label text="Search:"/>
+                <TextField fx:id="searchField" promptText="type words to search..."/>
+                <Button text="Search" onAction="#onSearch"/>
+                <Button text="Refresh" onAction="#onRefresh"/>
+            </HBox>
+
+            <TableView fx:id="table" prefHeight="280">
+                <columns>
+                    <TableColumn fx:id="colCreated" text="Created" prefWidth="140"/>
+                    <TableColumn fx:id="colType" text="Type" prefWidth="120"/>
+                    <TableColumn fx:id="colContent" text="Content" prefWidth="400"/>
+                    <TableColumn fx:id="colDoctor" text="DoctorId" prefWidth="100"/>
+                    <TableColumn fx:id="colTags" text="Tags" prefWidth="140"/>
+                </columns>
+            </TableView>
+
+            <Separator/>
+
+            <TitledPane text="Add Note" expanded="true">
+                <content>
+                    <GridPane hgap="8" vgap="8">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="20"/>
+                            <ColumnConstraints percentWidth="80"/>
+                        </columnConstraints>
+
+                        <Label text="Type:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="typeField"
+                                   promptText="e.g., Diagnosis"
+                                   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                        <Label text="Tags (comma):" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <TextField fx:id="tagsField"
+                                   promptText="e.g., fever,cough"
+                                   GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                        <Label text="Content:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <TextArea fx:id="contentArea"
+                                  prefRowCount="4" wrapText="true"
+                                  promptText="Write note..."
+                                  GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    </GridPane>
+                </content>
+            </TitledPane>
+
+        </VBox>
+    </content>
+    <buttonTypes>
+        <ButtonType text="Add" buttonData="OK_DONE"/>
+        <ButtonType text="Close" buttonData="CANCEL_CLOSE"/>
+        <ButtonType text="Delete Selected" buttonData="OTHER"/>
+    </buttonTypes>
+</DialogPane>

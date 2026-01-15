@@ -24,7 +24,7 @@
     <center>
         <TableView fx:id="deptTable">
             <columns>
-                <TableColumn fx:id="colId"   text="ID"          prefWidth="80"/>
+                <TableColumn fx:id="colId"   text="ID"/>
                 <TableColumn fx:id="colName" text="Name"        prefWidth="200"/>
                 <TableColumn fx:id="colDesc" text="Description" prefWidth="350"/>
             </columns>

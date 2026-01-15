@@ -23,9 +23,9 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Long register(Patient patient) {
+    public void register(Patient patient) {
         validate(patient);
-        return patientDao.create(patient);
+        patientDao.create(patient);
     }
 
     @Override

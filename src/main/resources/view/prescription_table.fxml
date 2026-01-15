@@ -23,7 +23,7 @@
     <center>
         <TableView fx:id="table">
             <columns>
-                <TableColumn fx:id="colId" text="ID" prefWidth="80"/>
+                <TableColumn fx:id="colId" text="ID"/>
                 <TableColumn fx:id="colPatient" text="Patient ID" prefWidth="120"/>
                 <TableColumn fx:id="colDoctor" text="Doctor ID" prefWidth="120"/>
                 <TableColumn fx:id="colIssued" text="Issued At" prefWidth="180"/>

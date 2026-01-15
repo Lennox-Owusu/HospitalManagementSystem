@@ -164,4 +164,52 @@ public class PatientTableController {
         a.setContentText(msg);
         a.show();
     }
+
+
+
+    @FXML
+    private void onNotes() {
+        var selected = patientTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert(Alert.AlertType.WARNING, "No selection", "Please select a patient first");
+            return;
+        }
+        try {
+            System.out.println("[onNotes] Loading /view/patient_notes_dialog.fxml ...");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/patient_notes_dialog.fxml"));
+            DialogPane pane = loader.load();
+            System.out.println("[onNotes] FXML loaded OK");
+
+            PatientNotesDialogController ctrl = loader.getController();
+            ctrl.setPatientId(selected.getId());
+            System.out.println("[onNotes] setPatientId -> " + selected.getId());
+
+            Dialog<PatientNotesDialogController.Result> dlg = new Dialog<>();
+            dlg.setTitle("Patient Notes — ID " + selected.getId());
+            dlg.setDialogPane(pane);
+            dlg.setResultConverter(param -> ctrl.handleDialogResult(param));
+            dlg.showAndWait();
+
+        } catch (Exception e) {
+            // Print full diagnostic to console
+            System.err.println("=== Notes dialog error ===");
+            e.printStackTrace();
+            Throwable cause = e.getCause();
+            int depth = 1;
+            while (cause != null && depth <= 5) {
+                System.err.println("Cause " + depth + ": " + cause.getClass().getName() + " - " + cause.getMessage());
+                cause = cause.getCause();
+                depth++;
+            }
+            // Show a more informative alert
+            showAlert(
+                    Alert.AlertType.ERROR,
+                    "Notes dialog error",
+                    (e.getClass().getSimpleName() + ": " + (e.getMessage() == null ? "(no message)" : e.getMessage()))
+            );
+        }
+    }
+
+
+
 }

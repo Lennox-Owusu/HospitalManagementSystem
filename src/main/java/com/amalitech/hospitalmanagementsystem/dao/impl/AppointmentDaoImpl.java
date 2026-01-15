@@ -127,7 +127,6 @@ public class AppointmentDaoImpl implements AppointmentDao {
 
     @Override
     public List<Appointment> findByDate(LocalDate date) {
-        // Match any time on that date using date range
         final String sql = """
             SELECT * FROM appointments
             WHERE appointment_date >= ?::date

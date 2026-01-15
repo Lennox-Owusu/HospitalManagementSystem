@@ -12,7 +12,6 @@ import java.util.Optional;
 public class InventoryServiceImpl implements InventoryService {
     private final InventoryDao dao;
     public InventoryServiceImpl() { this.dao = new InventoryDaoImpl(); }
-    public InventoryServiceImpl(InventoryDao dao) { this.dao = dao; }
 
     @Override public Long create(InventoryItem i) { i.validate(); return dao.create(i); }
     @Override public boolean update(InventoryItem i) {

@@ -22,7 +22,6 @@ public class Department {
     public void setDescription(String description) { this.description = description; }
 
     @Override public String toString() {
-        // So ComboBox shows the name automatically
         return name != null ? name : String.valueOf(id);
     }
 }

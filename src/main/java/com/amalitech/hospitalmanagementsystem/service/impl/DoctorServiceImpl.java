@@ -22,9 +22,9 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public Long register(Doctor doctor) {
+    public void register(Doctor doctor) {
         validate(doctor, true);
-        return doctorDao.create(doctor);
+        doctorDao.create(doctor);
     }
 
     @Override

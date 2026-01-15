@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
-
 <DialogPane xmlns="http://javafx.com/javafx/21.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.amalitech.hospitalmanagementsystem.controller.PrescriptionItemFormController">
@@ -33,10 +32,7 @@
         </VBox>
     </content>
 
-    <buttonTypes>
-        <ButtonType fx:constant="OK"/>
-        <ButtonType fx:constant="CANCEL"/>
-    </buttonTypes>
-
     <headerText>Prescription Item</headerText>
+    <ButtonType fx:constant="OK"/>
+    <ButtonType fx:constant="CANCEL"/>
 </DialogPane>

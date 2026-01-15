@@ -12,80 +12,60 @@
         <ToolBar>
             <Label text="Hospital Management System" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
             <Region HBox.hgrow="ALWAYS"/>
-            <Button text="Patients"    onAction="#switchToPatients"/>
-            <Button text="Doctors"     onAction="#switchToDoctors"/>
-            <Button text="Departments" onAction="#switchToDepartments"/>
-            <Button text="Appointments" onAction="#switchToAppointments"/>
+            <Button text="PatientManagement"    onAction="#switchToPatients"/>
+            <Button text="DoctorManagement"     onAction="#switchToDoctors"/>
+            <Button text="DepartmentManagement" onAction="#switchToDepartments"/>
+            <Button text="AppointmentManagement" onAction="#switchToAppointments"/>
         </ToolBar>
     </top>
 
     <!-- Center TabPane -->
     <center>
         <TabPane fx:id="tabPane">
-            <tabs>
-                <Tab text="Patients" closable="false">
-                    <content>
-                        <fx:include source="patient_table.fxml"/>
-                    </content>
-                </Tab>
+            <Tab text="Patients" closable="false">
+                <fx:include source="patient_table.fxml"/>
+            </Tab>
 
-                <Tab text="Doctors" closable="false">
-                    <content>
-                        <fx:include source="doctor_table.fxml"/>
-                    </content>
-                </Tab>
+            <Tab text="Doctors" closable="false">
+                <fx:include source="doctor_table.fxml"/>
+            </Tab>
 
-                <Tab text="Departments" closable="false">
-                    <content>
-                        <fx:include source="department_table.fxml"/>
-                    </content>
-                </Tab>
+            <Tab text="Departments" closable="false">
+                <fx:include source="department_table.fxml"/>
+            </Tab>
 
-                <Tab text="Appointments" closable="false">
-                    <content>
-                        <BorderPane>
-                            <center>
-                                <fx:include source="appointment_table.fxml"/>
-                            </center>
-                            <padding>
-                                <Insets top="10" right="10" bottom="10" left="10"/>
-                            </padding>
-                        </BorderPane>
-                    </content>
-                </Tab>
+            <Tab text="Appointments" closable="false">
+                <BorderPane>
+                    <center>
+                        <fx:include source="appointment_table.fxml"/>
+                    </center>
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                    </padding>
+                </BorderPane>
+            </Tab>
 
-                <!-- Reports tab -->
-                <Tab text="Reports" closable="false">
-                    <content>
-                        <fx:include source="reports_tab.fxml"/>
-                    </content>
-                </Tab>
+            <!-- Reports tab -->
+            <Tab text="Reports" closable="false">
+                <fx:include source="reports_tab.fxml"/>
+            </Tab>
 
-                <!-- Inside TabPane tabs -->
-                <Tab text="Prescriptions" closable="false">
-                    <content>
-                        <fx:include source="prescription_table.fxml"/>
-                    </content>
-                </Tab>
+            <!-- Inside TabPane tabs -->
+            <Tab text="Prescriptions" closable="false">
+                <fx:include source="prescription_table.fxml"/>
+            </Tab>
 
-                <Tab text="Feedback" closable="false">
-                    <content>
-                        <fx:include source="feedback_table.fxml"/>
-                    </content>
-                </Tab>
+            <Tab text="Feedback" closable="false">
+                <fx:include source="feedback_table.fxml"/>
+            </Tab>
 
-                <Tab text="Inventory" closable="false">
-                    <content>
-                        <fx:include source="inventory_table.fxml"/>
-                    </content>
-                </Tab>
-                <Tab text="Overview" closable="false">
-                    <content>
-                        <fx:include source="overview_dashboard.fxml"/>
-                    </content>
-                </Tab>
+            <Tab text="Inventory" closable="false">
+                <fx:include source="inventory_table.fxml"/>
+            </Tab>
+            <Tab text="Overview" closable="false">
+                <fx:include source="overview_dashboard.fxml"/>
+            </Tab>
 
-            </tabs>
         </TabPane>
     </center>
 

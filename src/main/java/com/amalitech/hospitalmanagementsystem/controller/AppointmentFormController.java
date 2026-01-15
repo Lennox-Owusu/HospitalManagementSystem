@@ -79,7 +79,6 @@ public class AppointmentFormController {
             return String.format("%02d:%02d", h, m);
         }
 
-        // Otherwise assume it's already HH:mm
         return raw;
     }
 
@@ -120,7 +119,7 @@ public class AppointmentFormController {
         if (date == null)
             throw new IllegalArgumentException("Date is required");
 
-        // FIX: normalize time
+        //normalize time
         String hhmm = normalizeTime(timeField.getText());
         LocalDateTime dt = Appointment.combine(date, hhmm);
 

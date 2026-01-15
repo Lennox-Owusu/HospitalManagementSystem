@@ -7,6 +7,7 @@
 <BorderPane xmlns="http://javafx.com/javafx/21.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.amalitech.hospitalmanagementsystem.controller.PatientTableController">
+
     <top>
         <ToolBar>
             <TextField fx:id="searchField" promptText="Search by name..."/>
@@ -15,6 +16,8 @@
             <Button text="Add" onAction="#onAdd"/>
             <Button text="Edit" onAction="#onEdit"/>
             <Button text="Delete" onAction="#onDelete"/>
+            <!-- ✅ New Notes button that opens patient_notes_dialog.fxml -->
+            <Button text="Notes" onAction="#onNotes"/>
             <Region HBox.hgrow="ALWAYS"/>
             <Button text="Refresh" onAction="#onRefresh"/>
         </ToolBar>

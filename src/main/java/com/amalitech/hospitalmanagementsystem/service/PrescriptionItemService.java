@@ -11,5 +11,5 @@ public interface PrescriptionItemService {
     boolean remove(Long itemId);
     Optional<PrescriptionItem> getById(Long itemId);
     List<PrescriptionItem> findByPrescription(Long prescriptionId);
-    boolean removeAllForPrescription(Long prescriptionId);
+    void removeAllForPrescription(Long prescriptionId);
 }

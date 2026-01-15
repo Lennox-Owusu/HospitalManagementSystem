@@ -32,12 +32,12 @@ import java.util.stream.Collectors;
 
 public class ReportsController {
 
-    // Existing charts
+    // charts
     @FXML private PieChart chartPatientsByGender;
     @FXML private BarChart<String, Number> chartDoctorsPerDept;
     @FXML private LineChart<String, Number> chartAppointmentsTrend;
 
-    // NEW charts
+    // charts
     @FXML private PieChart chartFeedbackRatings;
     @FXML private LineChart<String, Number> chartFeedbackTrend; // (optional: not used in FXML now)
     @FXML private BarChart<String, Number> chartLowStockByCategory;
@@ -48,7 +48,7 @@ public class ReportsController {
     private final DoctorService doctorService = new DoctorServiceImpl(new DoctorDaoImpl());
     private final AppointmentService appointmentService = new AppointmentServiceImpl();
 
-    // NEW services
+    // services
     private final PatientFeedbackService feedbackService = new PatientFeedbackServiceImpl();
     private final InventoryService inventoryService = new InventoryServiceImpl();
 
@@ -65,15 +65,13 @@ public class ReportsController {
             loadAppointmentsTrend();
 
             loadFeedbackRatings();
-            // If you later add chartFeedbackTrend to FXML, uncomment:
-            // loadFeedbackTrend();
+            loadFeedbackTrend();
 
             loadInventoryLowStockByCategory();
             loadTopLowStockItems();
         });
     }
 
-    /* ------------------ existing loaders ------------------ */
 
     private void loadPatientsByGender() {
         Map<String, Integer> genderCounts = new HashMap<>();
@@ -92,7 +90,6 @@ public class ReportsController {
     }
 
     private void loadDoctorsPerDept() {
-        // Dept name not joined here; show Department IDs consistently with your existing reports
         Map<String, Integer> deptCounts = new TreeMap<>();
         for (Doctor d : doctorService.getAll()) {
             String deptName = (d.getDepartmentId() == null) ? "Unassigned" : "Dept " + d.getDepartmentId();
@@ -122,8 +119,7 @@ public class ReportsController {
         chartAppointmentsTrend.getData().add(series);
     }
 
-    /* ------------------ NEW: Feedback analytics ------------------ */
-
+    //Feedback analytics
     private void loadFeedbackRatings() {
         // Ratings distribution (1..5)
         Map<Integer, Integer> ratingCounts = new TreeMap<>();
@@ -159,14 +155,13 @@ public class ReportsController {
         chartFeedbackTrend.getData().add(series);
     }
 
-    /* ------------------ NEW: Inventory analytics ------------------ */
-
+    //Inventory analytics
     private void loadInventoryLowStockByCategory() {
         List<InventoryItem> all = inventoryService.getAll();
         // Filter: below or equal to reorder level
         List<InventoryItem> low = all.stream()
                 .filter(i -> i.getQuantity() != null && i.getReorderLevel() != null && i.getQuantity() <= i.getReorderLevel())
-                .collect(Collectors.toList());
+                .toList();
 
         Map<String, Integer> perCategory = new TreeMap<>();
         for (InventoryItem i : low) {
@@ -187,14 +182,14 @@ public class ReportsController {
                 .filter(i -> i.getQuantity() != null && i.getReorderLevel() != null && i.getQuantity() <= i.getReorderLevel())
                 .collect(Collectors.toList());
 
-        // Sort by "deficit" (how many units needed to reach reorder)
+        // Sorting
         low.sort((a, b) -> {
             int defA = Math.max(0, a.getReorderLevel() - a.getQuantity());
             int defB = Math.max(0, b.getReorderLevel() - b.getQuantity());
             return Integer.compare(defB, defA);
         });
 
-        List<InventoryItem> top = low.stream().limit(TOP_N).collect(Collectors.toList());
+        List<InventoryItem> top = low.stream().limit(TOP_N).toList();
 
         chartTopLowStockItems.getData().clear();
         XYChart.Series<String, Number> series = new XYChart.Series<>();
@@ -203,7 +198,6 @@ public class ReportsController {
         for (InventoryItem it : top) {
             int deficit = Math.max(0, it.getReorderLevel() - it.getQuantity());
             String name = it.getName() == null ? ("ID:" + it.getItemId()) : it.getName();
-            // Keep labels short for readability
             String label = name.length() > 20 ? name.substring(0, 17) + "…" : name;
             series.getData().add(new XYChart.Data<>(label, deficit));
         }

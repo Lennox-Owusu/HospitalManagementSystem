@@ -45,7 +45,7 @@ public class Appointment {
         }
     }
 
-    /** Helper for building LocalDateTime from UI parts */
+    //Helper for building LocalDateTime from UI parts
     public static LocalDateTime combine(LocalDate d, String hhmm) {
         if (d == null) return null;
         if (hhmm == null || hhmm.isBlank()) throw new IllegalArgumentException("Time is required (HH:mm).");
