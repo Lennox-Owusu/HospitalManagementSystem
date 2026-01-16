@@ -92,4 +92,10 @@
         </VBox>
     </center>
 
+    <top>
+        <ToolBar>
+            <Button text="Refresh" onAction="#onRefresh"/>
+        </ToolBar>
+    </top>
+
 </BorderPane>

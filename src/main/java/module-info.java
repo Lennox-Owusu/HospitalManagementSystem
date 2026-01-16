@@ -26,6 +26,7 @@ module com.amalitech.hospitalmanagementsystem {
     requires org.mongodb.driver.core;
     requires org.mongodb.driver.sync.client;
     requires org.mongodb.bson;
+    requires java.desktop;
 
 
     //Reflection access for FXML & TableView

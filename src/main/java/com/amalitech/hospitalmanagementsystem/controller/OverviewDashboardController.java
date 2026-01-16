@@ -13,6 +13,8 @@ import javafx.scene.control.Label;
 
 import java.time.LocalDate;
 
+import static com.sun.media.sound.ModelByteBuffer.loadAll;
+
 public class OverviewDashboardController {
 
     @FXML private Label lblTotalPatients;
@@ -37,6 +39,15 @@ public class OverviewDashboardController {
     public void initialize() {
         Platform.runLater(this::loadStats);
     }
+
+    @FXML
+    private void onRefresh() {
+        loadAll();
+    }
+
+    private void loadAll() {
+    }
+
 
     private void loadStats() {
         lblTotalPatients.setText(String.valueOf(patientService.getAll().size()));
