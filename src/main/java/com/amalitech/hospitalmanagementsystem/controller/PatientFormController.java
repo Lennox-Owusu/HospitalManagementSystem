@@ -138,9 +138,10 @@ public class PatientFormController {
     }
 
     private boolean validateFName() {
-        String v = t(firstNameField);
-        boolean ok = v.matches(EMAIL_RE);
-        return mark(firstNameField, ok, "First name must be only alphabets)");
+        return mark(firstNameField,
+                !isBlank(firstNameField),
+                "First Name must only be alphabets");
+
     }
 
     private void validateAll() {
