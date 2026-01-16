@@ -21,6 +21,7 @@ import java.util.Optional;
 
 public class PatientTableController {
 
+
     @FXML private TableView<Patient> patientTable;
     @FXML private TableColumn<Patient, Long> colId;
     @FXML private TableColumn<Patient, String> colFirstName;
@@ -82,14 +83,24 @@ public class PatientTableController {
         data.setAll(list);
     }
 
+
     @FXML
     private void onAdd() {
         Optional<Patient> result = showFormDialog(null);
         result.ifPresent(p -> {
-            service.register(p);
-            loadAll();
+            try {
+                service.register(p);
+                loadAll();
+            } catch (IllegalArgumentException ex) {
+                showAlert(Alert.AlertType.ERROR, "Validation Error", ex.getMessage());
+            } catch (Exception ex) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Failed to add patient: " + ex.getMessage());
+            }
         });
     }
+
+
+
 
     @FXML
     private void onEdit() {
@@ -98,16 +109,24 @@ public class PatientTableController {
             showAlert(Alert.AlertType.WARNING, "No selection", "Please select a patient to edit");
             return;
         }
+
         Optional<Patient> result = showFormDialog(selected);
         result.ifPresent(p -> {
-            p.setId(selected.getId());
-            boolean ok = service.update(p);
-            if (!ok) {
-                showAlert(Alert.AlertType.ERROR, "Update failed", "Could not update the patient");
+            try {
+                p.setId(selected.getId());
+                boolean ok = service.update(p);
+                if (!ok) {
+                    showAlert(Alert.AlertType.ERROR, "Update failed", "Could not update the patient");
+                }
+                loadAll();
+            } catch (IllegalArgumentException ex) {
+                showAlert(Alert.AlertType.ERROR, "Validation Error", ex.getMessage());
+            } catch (Exception ex) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Failed to update patient: " + ex.getMessage());
             }
-            loadAll();
         });
     }
+
 
     @FXML
     private void onDelete() {
@@ -129,6 +148,7 @@ public class PatientTableController {
         });
     }
 
+
     private Optional<Patient> showFormDialog(Patient existing) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/patient_form.fxml"));
@@ -137,6 +157,9 @@ public class PatientTableController {
             PatientFormController controller = loader.getController();
             controller.setExisting(existing);
 
+            // Enable live validation (adds /css/validation.css, binds OK button, marks fields)
+            controller.enableRealtimeValidation(pane);
+
             Dialog<ButtonType> dlg = new Dialog<>();
             dlg.setDialogPane(pane);
             dlg.setTitle(existing == null ? "Add Patient" : "Edit Patient");
@@ -144,7 +167,7 @@ public class PatientTableController {
             Optional<ButtonType> res = dlg.showAndWait();
             if (res.isPresent() && res.get() == ButtonType.OK) {
                 try {
-                    return Optional.of(controller.collectResult());
+                    return Optional.of(controller.collectResult()); // still throws if invalid (extra safety)
                 } catch (IllegalArgumentException ex) {
                     showAlert(Alert.AlertType.ERROR, "Validation error", ex.getMessage());
                     return Optional.empty();
@@ -156,6 +179,8 @@ public class PatientTableController {
             return Optional.empty();
         }
     }
+
+
 
     private void showAlert(Alert.AlertType type, String title, String msg) {
         Alert a = new Alert(type);

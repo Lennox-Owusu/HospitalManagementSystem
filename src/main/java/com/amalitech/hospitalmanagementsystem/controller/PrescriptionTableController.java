@@ -114,15 +114,13 @@ public class PrescriptionTableController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/prescription_form.fxml"));
             DialogPane pane = loader.load();
-            PrescriptionFormController ctrl = loader.getController();
-            ctrl.setExisting(existing);
+
             Dialog<ButtonType> dlg = new Dialog<>();
             dlg.setDialogPane(pane);
             dlg.setTitle(existing == null ? "Add Prescription" : "Edit Prescription");
             Optional<ButtonType> res = dlg.showAndWait();
-            if (res.isPresent() && res.get() == ButtonType.OK) {
-                try { return Optional.of(ctrl.collectResult()); }
-                catch (IllegalArgumentException ex) { showAlert(Alert.AlertType.ERROR, "Validation error", ex.getMessage()); }
+            if (res.isPresent()) {
+                res.get();
             }
             return Optional.empty();
         } catch (IOException e) {
